@@ -1,72 +1,167 @@
-# Next.js Project with Tailwind, Ant Design, and NextAuth
+# Frontend interview task
 
-<p align=“center”>
-  <a href=“https://nextjs.org/”><img src=“https://img.shields.io/badge/Next.js-v14.2.6-000?logo=next.js” alt=“Next.js”></a>
-  <a href=“https://tailwindcss.com/”><img src=“https://img.shields.io/badge/Tailwind_CSS-2.2-38B2AC?logo=tailwind-css” alt=“Tailwind CSS”></a>
-  <a href=“https://ant.design/”><img src=“https://img.shields.io/badge/Ant%20Design-Custom-0170FE?logo=ant-design” alt=“Ant Design”></a>
-  <a href=“https://next-auth.js.org/”><img src=“https://img.shields.io/badge/NextAuth-Google_Login-FF4785?logo=nextdotauth” alt=“NextAuth”></a>
-  <a href=“https://storybook.js.org/”><img src=“https://img.shields.io/badge/Storybook-v6.5-FF4785?logo=storybook” alt=“Storybook”></a>
-</p>
+## Overview
 
-## 📖 Project Description
+This project involves creating a web application based on the given API response and design requirements. The application should display reward options, allow row selection, calculate the sum of Assets under Management (AuM) for selected rows, and compute rewards based on user input.
 
-This is a Next.js application using the `app` folder structure (version 14.2.6), organized with Domain-Driven Design (DDD) and with a separate Design System folder for centralized components (following the Component Centric Architecture concept). Tailwind CSS and Ant Design (with custom themes) are used for styling, and NextAuth handles authentication with Google login. Storybook is set up for visual component documentation and testing.
+## Data
 
-## 🌟 Features
+The provided API response contains a list of reward options, each with associated metrics and providers. Below is a sample of the data structure:
 
-	•	Authentication with NextAuth and Google login
-	•	Design System with Tailwind CSS and Ant Design
-	•	Domain-Driven Design for improved organization and scalability
-	•	Storybook for visual documentation and component testing
-
-## 📂 Project Structure
-
-	•	app: Application logic organized using DDD.
-	•	ui: Separate design system for reusable components.
-
-## 🚀 How to Run the Project
-
-	1.	Clone the repository:
-```bash
-git clone https://github.com/your-username/project-name.git
+```javascript
+const data = [
+    {
+        id: 'rewardOption-1',
+        type: { key: 'pos' },
+        metrics: [
+            {
+                id: '6642aadca1bf2a657d38c5a9',
+                label: 'Reward Rate',
+                metricKey: 'reward_rate',
+                defaultValue: 2.920908,
+            },
+            {
+                id: '6642aadba1bf2a657d38c5a6',
+                label: 'AuM',
+                metricKey: 'assets_under_management',
+                defaultValue: 9227765317.071049,
+            },
+            {
+                id: '6642aad9ebe041c4fe953c2f',
+                label: 'Commission',
+                metricKey: 'commission',
+                defaultValue: 14.000000000000002,
+            },
+        ],
+        providers: [
+            {
+                id: 'provider-1',
+                logoUrl:
+                    'https://storage.googleapis.com/stakingrewards-static/images/providers/production/eigenlayer/0x529ec9ac9a80428cf8c92557f2eb1b336616f543.png',
+                name: 'Allnodes',
+                slug: 'allnodes',
+                type: { key: 'pos' },
+            },
+            {
+                id: '5fcce9256d61c4000724ac04',
+                slug: 'lido-finance',
+                name: 'Lido Finance',
+                logoUrl:
+                    'https://cms.stakingrewards.com/wp-content/uploads/2020/12/lido_symbol.png',
+                type: {
+                    key: 'liquid-staking',
+                },
+            },
+        ],
+    },
+    {
+        id: 'rewardOption-2',
+        type: { key: 'pos' },
+        providers: [
+            {
+                id: 'provider-2',
+                logoUrl:
+                    'https://storage.googleapis.com/stakingrewards-static/images/providers/production/eigenlayer/0x1f8c8b1d78d01bcc42ebdd34fae60181bd697662.png',
+                name: 'Kiln',
+                slug: 'kiln',
+                type: { key: 'pos' },
+            },
+        ],
+        metrics: [
+            {
+                id: '6642aadca1bf2a657d38c5a9',
+                label: 'Reward Rate',
+                metricKey: 'reward_rate',
+                defaultValue: 2.443,
+            },
+            {
+                id: '6642aadba1bf2a657d38c5a6',
+                label: 'AuM',
+                metricKey: 'assets_under_management',
+                defaultValue: 18632938564.123456,
+            },
+            {
+                id: '6642aad9ebe041c4fe953c2f',
+                label: 'Commission',
+                metricKey: 'commission',
+                defaultValue: 5.000000000000002,
+            },
+        ],
+    },
+    {
+        id: 'rewardOption-3',
+        type: { key: 'liquid-staking' },
+        providers: [
+            {
+                id: 'provider-1',
+                logoUrl:
+                    'https://storage.googleapis.com/stakingrewards-static/images/providers/production/eigenlayer/0x529ec9ac9a80428cf8c92557f2eb1b336616f543.png',
+                name: 'Allnodes',
+                slug: 'allnodes',
+                type: { key: 'pos' },
+            },
+            {
+                id: '5fcce9256d61c4000724ac04',
+                slug: 'lido-finance',
+                name: 'Lido Finance',
+                logoUrl:
+                    'https://cms.stakingrewards.com/wp-content/uploads/2020/12/lido_symbol.png',
+                type: {
+                    key: 'liquid-staking',
+                },
+            },
+        ],
+        metrics: [
+            {
+                id: '6642aadca1bf2a6733d38c543',
+                label: 'Reward Rate',
+                metricKey: 'reward_rate',
+                defaultValue: 3.14,
+            },
+            {
+                id: '6642aadba1bf2a657d38c573',
+                label: 'AuM',
+                metricKey: 'assets_under_management',
+                defaultValue: 13900000000.62,
+            },
+            {
+                id: '6642aad9ebe041c4fe953c24',
+                label: 'Commission',
+                metricKey: 'commission',
+                defaultValue: 10.000000000000002,
+            },
+        ],
+    },
+];
 ```
-	2.	Install dependencies:
-```bash
-npm install
-```
-	3.	Configure the environment variables as needed (example in `.env.example`).
-	4.	Run the development server:
-```bash
-npm run dev
-```
-	5.	Open http://localhost:3000 to view the project.
 
-## 📘 `.env` Configuration
+## **Task Requirements**
 
-```plaintext
-# Google Authentication
-GOOGLE_ID = ‘’
-GOOGLE_SECRET = ‘’
+**Data Display**
 
-# To obtain GOOGLE_ID and GOOGLE_SECRET:
-# 1. Go to https://console.cloud.google.com/
-# 2. Create an OAuth 2.0 Client ID
-# 3. Set up consent and redirect configurations, then copy the generated values
+- Render the data in a row list format, showing metrics and provider matching the reward option type for each reward option.
 
-# NEXTAUTH_SECRET is required for session cookie encryption
-# To generate, run in terminal:
-# openssl rand -base64 32
-NEXTAUTH_SECRET = ‘’
-```
+**Sorting**
 
-## 📚 Running Storybook
+- Implement sorting by selected metric
 
-To view and test components visually, run:
+**Row Selection**
 
-```bash
-npm run storybook
-```
+- Allow users to select rows and display the sum of the AuM values for the selected rows at the bottom of the table.
 
-## 🤝 Contribution
+**Staking Amount Input**
 
-Contributions are welcome! Feel free to open issues and pull requests.
+- Provide an input field for the user to enter a staking amount. Based on this input, calculate and display the rewards for each row.
+
+## Design
+
+![alt text](https://stakingrewards.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F93d50457-905b-445a-8371-d85f3ae7fe4d%2F34a79931-034f-4ca4-a6b0-19918f1a9ebd%2FUntitled.png?table=block&id=940e8054-9cd0-4c44-9c51-b0afdf5e2aea&spaceId=93d50457-905b-445a-8371-d85f3ae7fe4d&width=1420&userId=&cache=v2)
+
+
+## Technical Requirements
+
+- Use React for frontend development.
+
+- You may use any state management library of your choice.
+
+- Ensure the code is clean, well-documented, and follows best practices.
